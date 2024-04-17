@@ -1,0 +1,25 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewData["Title"] = "Home";
+}
+
+@section Header {
+    <script>
+        var msg = '@TempData["Msg"]';
+        if (msg.length) {
+            alert(msg);
+        }
+    </script>
+    <h1>Header</h1>
+}
+
+
+<p>This is the home page.</p>
+
+
+
+@section Footer {
+    <footer>Footer</footer>
+}

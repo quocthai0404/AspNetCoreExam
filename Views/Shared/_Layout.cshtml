@@ -1,0 +1,269 @@
+﻿@model AspdotNetCoreMVCExam.Models.NhanVien;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>AdminLTE 3 | Dashboard</title>
+
+	<!-- Google Font: Source Sans Pro -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="~/plugins/fontawesome-free/css/all.min.css">
+	<!-- Ionicons -->
+	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+	<!-- Tempusdominus Bootstrap 4 -->
+	<link rel="stylesheet" href="~/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+	<!-- iCheck -->
+	<link rel="stylesheet" href="~/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+	<!-- JQVMap -->
+	<link rel="stylesheet" href="~/plugins/jqvmap/jqvmap.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+	<!-- overlayScrollbars -->
+	<link rel="stylesheet" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+	<!-- Daterange picker -->
+	<link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
+	<!-- summernote -->
+	<link rel="stylesheet" href="~/plugins/summernote/summernote-bs4.min.css">
+
+	<script>
+		var msg = '@TempData["Msg"]';
+		if (msg.length) {
+			alert(msg);
+		}
+	</script>
+	<script src="https://kit.fontawesome.com/78538bb3ed.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	<script>
+		$(function () {
+			// $("#datepicker").datepicker();
+			$("#datepicker").datepicker({ dateFormat: 'yy/mm/dd' });
+
+		});
+	</script>
+	<script>
+		$(document).ready(function () {
+			$("#repassword").keyup(function () {
+				var newPassword = $("#newpassword").val();
+				var retypedPassword = $(this).val();
+				console.log("key")
+				if (newPassword !== retypedPassword) {
+					$("#exampleInputPassword1-error").show(); 
+					$("#exampleInputPassword1-success").hide(); 
+				} else {
+					$("#exampleInputPassword1-error").hide(); 
+					$("#exampleInputPassword1-success").show(); 
+				}
+			});
+		});
+	</script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+	<div class="wrapper">
+
+		<!-- Preloader -->
+		<!-- Navbar -->
+		<!-- /.navbar -->
+		<!-- Main Sidebar Container -->
+		<aside class="main-sidebar sidebar-dark-primary elevation-4">
+			<!-- Brand Logo -->
+			<!-- Sidebar -->
+			<div class="sidebar">
+				<!-- Sidebar user panel (optional) -->
+				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
+					<div class="image">
+						<a href="#" class="d-block" data-toggle="modal" data-target="#exampleModal2"><img src="~/dist/img/@Html.DisplayFor(Model => Model.Hinhanh)" class="img-circle elevation-2"></a>
+						
+					</div>
+					<div class="info">
+						<a href="#" class="d-block" data-toggle="modal" data-target="#exampleModal">
+							
+							@Html.DisplayFor(Model => Model.Hoten)
+						</a>
+					</div>
+				</div>
+
+				<!-- SidebarSearch Form -->
+				<!-- Sidebar Menu -->
+				@RenderSection("Nav")
+				<!-- /.sidebar-menu -->
+			</div>
+			<!-- /.sidebar -->
+		</aside>
+
+		<!-- Content Wrapper. Contains page content -->
+		@RenderBody()
+
+		<!-- /.content-wrapper -->
+		<!-- Control Sidebar -->
+		<aside class="control-sidebar control-sidebar-dark">
+			<!-- Control sidebar content goes here -->
+		</aside>
+		<!-- /.control-sidebar -->
+	</div>
+	<!-- ./wrapper -->
+	<!-- jQuery -->
+	<script src="~/plugins/jquery/jquery.min.js"></script>
+	<!-- jQuery UI 1.11.4 -->
+	<script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+	<script>
+		$.widget.bridge('uibutton', $.ui.button)
+	</script>
+	<!-- Bootstrap 4 -->
+	<script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!-- ChartJS -->
+	<script src="~/plugins/chart.js/Chart.min.js"></script>
+	<!-- Sparkline -->
+	<script src="~/plugins/sparklines/sparkline.js"></script>
+	<!-- JQVMap -->
+	<script src="~/plugins/jqvmap/jquery.vmap.min.js"></script>
+	<script src="~/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+	<!-- jQuery Knob Chart -->
+	<script src="~/plugins/jquery-knob/jquery.knob.min.js"></script>
+	<!-- daterangepicker -->
+	<script src="~/plugins/moment/moment.min.js"></script>
+	<script src="~/plugins/daterangepicker/daterangepicker.js"></script>
+	<!-- Tempusdominus Bootstrap 4 -->
+	<script src="~/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+	<!-- Summernote -->
+	<script src="~/plugins/summernote/summernote-bs4.min.js"></script>
+	<!-- overlayScrollbars -->
+	<script src="~/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+	<!-- AdminLTE App -->
+	<script src="~/dist/js/adminlte.js"></script>
+
+	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!--Modal Header-->
+				<div class="modal-header card-header">
+					<h5 class="modal-title" id="exampleModalLabel">Information</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form method="post" asp-controller="account" asp-action="changeInfo">
+					<div class="modal-body">
+						<div class="card card-primary">
+							<!--
+								<div class="card-header">
+									<h3 class="card-title">Information</h3>
+								 </div>
+							-->
+							<!-- /.card-header -->
+							<!-- form start -->
+
+
+
+							<div class="card-body">
+								
+								<div class="form-group">
+									<label for="exampleInputEmail1">Name</label>
+									<input type="text" class="form-control" asp-for="Hoten" placeholder="Enter Name">
+								</div>
+								<div class="form-group">
+									<label for="newpassword">New Password</label>
+									<input name="newpassword" type="password" class="form-control" id="newpassword" placeholder="New Password">
+								</div>
+								<div class="form-group">
+									<label for="repassword">Retype New Password</label>
+									<input name="repassword" type="password" class="form-control" id="repassword" placeholder="re-password">
+									<span id="exampleInputPassword1-error" class="error invalid-feedback">Repassword not match new password</span>
+									<span id="exampleInputPassword1-success" class="error invalid-feedback" style="color:limegreen">Repassword match new password</span>
+								</div>
+								
+								<div class="form-group">
+									<label for="datepicker">Birthday</label>
+									<input type="text" id="datepicker" asp-for="Ngaysinh" asp-format="{0:yyyy/MM/dd}" class="form-control" placeholder="Your Birthday">
+								</div>
+								
+
+
+							</div>
+							<!-- /.card-body -->
+
+							<div class="card-footer">
+							</div>
+
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<a class="btn btn-danger" asp-action="logout" asp-controller="Login">Log Out</a>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal Picture-->
+	<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!--Modal Header-->
+				<div class="modal-header card-header">
+					<h5 class="modal-title" id="exampleModalLabel">Select Your Image</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form>
+					<div class="modal-body">
+						<div class="card card-primary">
+							<!--
+								<div class="card-header">
+									<h3 class="card-title">Information</h3>
+								 </div>
+							-->
+							<!-- /.card-header -->
+							<!-- form start -->
+
+
+
+							<div class="card-body">
+								<div class="form-group">
+									<label for="exampleInputFile">File input</label>
+									<div class="input-group">
+										<div class="custom-file">
+											<input type="file" class="custom-file-input" id="exampleInputFile">
+											<label class="custom-file-label" for="exampleInputFile">Choose file</label>
+										</div>
+										<div class="input-group-append">
+											<span class="input-group-text">Upload</span>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+							<!-- /.card-body -->
+
+							<div class="card-footer">
+							</div>
+
+						</div>
+					</div>
+
+					<div class="modal-footer">
+						<a class="btn btn-danger" data-dismiss="modal">Close</a>
+						<button type="submit" class="btn btn-primary">Save change</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
