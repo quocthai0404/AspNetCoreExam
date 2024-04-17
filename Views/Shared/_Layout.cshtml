@@ -54,11 +54,11 @@
 				var retypedPassword = $(this).val();
 				console.log("key")
 				if (newPassword !== retypedPassword) {
-					$("#exampleInputPassword1-error").show(); 
-					$("#exampleInputPassword1-success").hide(); 
+					$("#exampleInputPassword1-error").show();
+					$("#exampleInputPassword1-success").hide();
 				} else {
-					$("#exampleInputPassword1-error").hide(); 
-					$("#exampleInputPassword1-success").show(); 
+					$("#exampleInputPassword1-error").hide();
+					$("#exampleInputPassword1-success").show();
 				}
 			});
 		});
@@ -79,11 +79,11 @@
 				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 					<div class="image">
 						<a href="#" class="d-block" data-toggle="modal" data-target="#exampleModal2"><img src="~/dist/img/@Html.DisplayFor(Model => Model.Hinhanh)" class="img-circle elevation-2"></a>
-						
+
 					</div>
 					<div class="info">
 						<a href="#" class="d-block" data-toggle="modal" data-target="#exampleModal">
-							
+
 							@Html.DisplayFor(Model => Model.Hoten)
 						</a>
 					</div>
@@ -165,7 +165,7 @@
 
 
 							<div class="card-body">
-								
+
 								<div class="form-group">
 									<label for="exampleInputEmail1">Name</label>
 									<input type="text" class="form-control" asp-for="Hoten" placeholder="Enter Name">
@@ -180,12 +180,12 @@
 									<span id="exampleInputPassword1-error" class="error invalid-feedback">Repassword not match new password</span>
 									<span id="exampleInputPassword1-success" class="error invalid-feedback" style="color:limegreen">Repassword match new password</span>
 								</div>
-								
+
 								<div class="form-group">
 									<label for="datepicker">Birthday</label>
 									<input type="text" id="datepicker" asp-for="Ngaysinh" asp-format="{0:yyyy/MM/dd}" class="form-control" placeholder="Your Birthday">
 								</div>
-								
+
 
 
 							</div>
@@ -213,50 +213,21 @@
 			<div class="modal-content">
 				<!--Modal Header-->
 				<div class="modal-header card-header">
-					<h5 class="modal-title" id="exampleModalLabel">Select Your Image</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Upload Your Avatar</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form>
+				<form method="post" asp-controller="account" asp-action="changePhoto" enctype="multipart/form-data">
 					<div class="modal-body">
 						<div class="card card-primary">
-							<!--
-								<div class="card-header">
-									<h3 class="card-title">Information</h3>
-								 </div>
-							-->
-							<!-- /.card-header -->
-							<!-- form start -->
-
-
-
-							<div class="card-body">
-								<div class="form-group">
-									<label for="exampleInputFile">File input</label>
-									<div class="input-group">
-										<div class="custom-file">
-											<input type="file" class="custom-file-input" id="exampleInputFile">
-											<label class="custom-file-label" for="exampleInputFile">Choose file</label>
-										</div>
-										<div class="input-group-append">
-											<span class="input-group-text">Upload</span>
-										</div>
-									</div>
-								</div>
-
-
-							</div>
-							<!-- /.card-body -->
-
-							<div class="card-footer">
-							</div>
+							<input  type="file" name="file">
 
 						</div>
 					</div>
 
 					<div class="modal-footer">
-						<a class="btn btn-danger" data-dismiss="modal">Close</a>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Save change</button>
 					</div>
 				</form>

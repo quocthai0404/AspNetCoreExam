@@ -22,8 +22,17 @@ public class LoginController : Controller
     [Route("")]
     public IActionResult Index()
     {
-        return View("Login");
-    }
+        var username = User.FindFirst(ClaimTypes.Name)?.Value;
+		if (username != null)
+		{
+			NhanVien nv = accountService.FindByUsername(username);
+			return nv.Quyen == 1
+				? RedirectToAction("index", "dashboard", new { Area = "Employee" })
+				: RedirectToAction("index", "dashboard", new { Area = "Support" });
+		}
+		return View("Login");
+
+	}
     [Route("Employee")]
 	public IActionResult Employee()
 	{

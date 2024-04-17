@@ -9,8 +9,6 @@ namespace AspdotNetCoreMVCExam.Areas.Employee.Controllers;
 public class RequestEmployeeController : Controller
 {
     private AccountService accountService;
-    private NhanVien nv;
-    private string username;
     public RequestEmployeeController(AccountService _accountService)
     {
         accountService = _accountService;
