@@ -109,7 +109,7 @@ public class AccountController : Controller
 	[HttpPost]
 	[Route("createAccount")]
 	public IActionResult createAccount(string username, string fullname, string password, string repassword, DateTime birthday, int role) {
-		if (birthday == null) {
+		if (birthday == DateTime.MinValue) {
 			TempData["Msg"] = "Invalid date";
 			return RedirectToAction("index", "dashboard", new { Area = "Admin" }) ;
 		}
