@@ -22,7 +22,7 @@ Can update their account information.
 Database
 The database for the system is shown in the following diagram:
 
-[Database diagram]
+![Database diagram](https://camo.githubusercontent.com/bfeb65d0f971c17e6e3db4433fe1a067a1a17ef0e3464922de2908fd6e1e22e6/68747470733a2f2f64726976652e676f6f676c652e636f6d2f75633f6578706f72743d646f776e6c6f61642669643d31537434554b527a4b785262527067314e4844773335704b473664717979436d5f)
 
 Features
 The system has the following features:
