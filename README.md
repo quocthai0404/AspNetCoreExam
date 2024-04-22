@@ -5,16 +5,16 @@
 Can view a list of employees.  
 Can create new employee accounts.  
 Can view and assign support requests.  
-Can search for requests by time range and priority.  <br>
+Can search for requests by time range and priority.  <br> <br>
 **Support Staff:**  Can log in to the system with support staff privileges.  
 Can view assigned support requests.  
 Can search for requests by time range and priority.  
-Can update their account information.  <br>
+Can update their account information.  <br> <br>
 **Employee:**  Can log in to the system with employee privileges.  
 Can submit support requests.  
 Can view their submitted support requests.  
 Can search for their submitted requests by time range and priority.  
-Can update their account information.   <br>
+Can update their account information.   <br> <br>
 **Database**  
 The database for the system is shown in the following diagram:
 
@@ -42,15 +42,10 @@ Visual Studio 2019: A development environment for .NET.
 SQL Server: A relational database management system.  
 Once you have these installed, you can clone the repository, run the **SQL file** and build the solution. Then, you can run the application in Visual Studio.  
 
-Documentation For more detailed documentation, please refer to the following:
+## Documentation For more detailed documentation, please refer to the following: <br>
 
-ASP.NET Core MVC documentation:  [https://learn.microsoft.com/en-us/aspnet/mvc/](https://learn.microsoft.com/en-us/aspnet/mvc/) 
-Entity Framework Core documentation:  [https://learn.microsoft.com/en-us/ef/](https://learn.microsoft.com/en-us/ef/)  
-AJAX documentation:  [https://developer.mozilla.org/en-US/docs/Glossary/AJAX](https://developer.mozilla.org/en-US/docs/Glossary/AJAX) 
- LINQ documentation:  [https://learn.microsoft.com/en-us/dotnet/csharp/linq/](https://learn.microsoft.com/en-us/dotnet/csharp/linq/)
-For more detailed documentation, please refer to the following:
+ASP.NET Core MVC documentation:  [https://learn.microsoft.com/en-us/aspnet/mvc/](https://learn.microsoft.com/en-us/aspnet/mvc/)  <br>
+Entity Framework Core documentation:  [https://learn.microsoft.com/en-us/ef/](https://learn.microsoft.com/en-us/ef/)   <br>
+AJAX documentation:  [https://developer.mozilla.org/en-US/docs/Glossary/AJAX](https://developer.mozilla.org/en-US/docs/Glossary/AJAX)  <br>  
+LINQ documentation:  [https://learn.microsoft.com/en-us/dotnet/csharp/linq/](https://learn.microsoft.com/en-us/dotnet/csharp/linq/) <br>
 
-ASP.NET Core MVC documentation: https://learn.microsoft.com/en-us/aspnet/mvc/
-Entity Framework Core documentation: https://learn.microsoft.com/en-us/ef/
-AJAX documentation: https://developer.mozilla.org/en-US/docs/Glossary/AJAX
-LINQ documentation: https://learn.microsoft.com/en-us/dotnet/csharp/linq/
