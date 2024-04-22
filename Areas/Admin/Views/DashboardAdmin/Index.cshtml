@@ -1,35 +1,119 @@
 ﻿@{
-	Layout = "~/Views/Shared/_Layout.cshtml";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-hi
+
 
 @section Nav {
-    <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
+	<nav class="mt-2">
+		<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+			<!-- Add icons to the links using the .nav-icon class
+				 with font-awesome or any other icon font library -->
+			<div style="background-color:lightslategrey">
+			<li class="nav-header" style="font-size:20px">Employee</li>
+			</div>
+			<li class="nav-item">
+				<a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="nav-link">
+					<i class="fas fa-circle nav-icon"></i>
+					<p>View Employee</p>
+				</a>
+			</li>
+			<li class="nav-item">
+				<a href="" data-toggle="modal" data-target="#createAccountModal" class="nav-link">
+					<i class="fas fa-circle nav-icon"></i>
+					<p >
+						Create Employee Account
+					</p>
+				</a>
+			</li>
+			<div style="background-color:lightslategrey">
+			<li class="nav-header" style="font-size:20px">Request</li>
+			</div>
+			<li class="nav-item">
+				<a asp-area="Admin" asp-controller="Request" asp-action="Index" class="nav-link">
+					<i class="fas fa-circle nav-icon"></i>
+					<p>View Request</p>
+				</a>
+			</li>
 
 
-            <div style="background-color:lightslategrey">
-                <li class="nav-header" style="font-size:20px">Employee</li>
-            </div>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <p>View Employee</p>
-                </a>
-            </li>
-            <div style="background-color:lightslategrey">
-            <li class="nav-header" style="font-size:20px">Request</li>
-            </div>
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="fas fa-circle nav-icon"></i>
-                    <p>View Request</p>
-                </a>
-            </li>
-
-        </ul>
-    </nav>
+		</ul>
+	</nav>
 }
+
+<!--Body-->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<div class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h3 class="m-0">View Employee</h3>
+				</div><!-- /.col -->
+
+			</div><!-- /.row -->
+		</div><!-- /.container-fluid -->
+	</div>
+	<!-- /.content-header -->
+	<!-- Main content -->
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-8">
+					<div class="card ">
+						<div class="card-header bg-info">
+							<h3 class="card-title" style="margin-top: 11px;"> Employee List</h3>
+
+
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body table-responsive p-0">
+							<table class="table table-hover text-nowrap" id="RequestTable">
+								<thead>
+									<tr>
+										<th>Username</th>
+										<th>FullName</th>
+										<th>Birthday</th>
+										<th>Avatar</th>
+										<th>Role</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var emp in ViewBag.employees)
+									{
+										<tr>
+											<td>@emp.Username</td>
+											<td>@emp.Hoten</td>
+											<td>@emp.Ngaysinh.ToString("yyyy/MM/dd")</td>
+											<td><img src="~/dist/img/@emp.Hinhanh" width="50px" height="50px"></img></td>
+											<td>@emp.Quyen</td>
+											@if (emp.Quyen == 1)
+											{
+												<td><a data-value="@emp.Username" class="btn btn-success btn-view" data-toggle="modal" data-target=".bd-example-modal-lg">View Request</a></td>
+
+											}
+											else
+											{
+												<td></td>
+											}
+
+										</tr>
+
+									}
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+
+			</div>
+
+		</div><!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+</div>
+
+

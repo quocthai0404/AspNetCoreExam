@@ -1,5 +1,4 @@
-﻿@model AspdotNetCoreMVCExam.Models.NhanVien;
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,23 +44,6 @@
 		$(function () {
 			// $("#datepicker").datepicker();
 			$("#datepicker").datepicker({ dateFormat: 'yy/mm/dd' });
-			$("#from").datepicker({ dateFormat: 'yy/mm/dd' });
-			$("#to").datepicker({ dateFormat: 'yy/mm/dd' });
-			$("#from").on("change", () => {
-
-				var dateFrom = $("#from").val();
-				$("#to").datepicker("option", "minDate", new Date(dateFrom));
-			});
-
-			$("#from3").datepicker({ dateFormat: 'yy/mm/dd' });
-			$("#to3").datepicker({ dateFormat: 'yy/mm/dd' });
-			$("#from3").on("change", () => {
-
-				var dateFrom = $("#from3").val();
-				$("#to3").datepicker("option", "minDate", new Date(dateFrom));
-			});
-
-
 		});
 	</script>
 	<script>
@@ -78,104 +60,7 @@
 					$("#exampleInputPassword1-success").show();
 				}
 			});
-
-			function createHTMLTable(result) {
-			  
-			  let s = "";
-			  for (let i = 0; i < result.length; i++) {
-				let manv = result[i].manvXuly==null?" ":result[i].manvXuly;
-				console.log(manv);
-				s += "<tr>";
-				s += `
-				  <td>${result[i].mayeucau}</td>
-				  <td>${result[i].tieude}</td>
-				  <td>${result[i].ngaygui}</td>
-				  <td>${result[i].madouutien}</td>
-				  <td>${result[i].noidung}</td>
-				  <td>${manv}</td>
-				`;
-				s += "</tr>";
-			  }
-			  return s;
-			}
-
-			$("#buttonSearch").on("click", function () {
-
-				var from = $('#from').val();
-				var to = $('#to').val();
-				var priority = $('#priority').val();
-				$.ajax({
-					type: 'GET',
-					url: '/ajax/ajax1',
-					data: {
-						from: from,
-						to: to,
-						priority: priority
-					},
-					success: (result) => {
-						
-						if (result == 400) {
-						  
-							alert("Invalid Date");
-						}
-						 else {
-							console.log(result);
-							$("#RequestTable tbody").html(createHTMLTable(result));
-						}
-					}
-				});
-			});
-			function createHTMLTable2(result) {
-
-				let s = "";
-				for (let i = 0; i < result.length; i++) {
-					
-					s += "<tr>";
-					s += `
-						  <td>${result[i].mayeucau}</td>
-						  <td>${result[i].tieude}</td>
-						  <td>${result[i].ngaygui}</td>
-						  <td>${result[i].madouutien}</td>
-						  <td>${result[i].noidung}</td>
-						  
-						`;
-					s += "</tr>";
-				}
-				return s;
-			}
-
-			$("#buttonSearch3").on("click", function () {
-
-				var from = $('#from3').val();
-				var to = $('#to3').val();
-				var priority = $('#priority3').val();
-				console.log(from);
-				console.log(to);
-				console.log(priority);
-				$.ajax({
-					type: 'GET',
-					url: '/ajax/ajax5',
-					data: {
-						from: from,
-						to: to,
-						priority: priority
-					},
-					success: (result) => {
-
-						if (result == 400) {
-
-							alert("Invalid Date");
-						}
-						else {
-							
-							$("#RequestTable3 tbody").html(createHTMLTable2(result));
-						}
-					}
-				});
-			});
 		});
-		
-
 	</script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -192,34 +77,119 @@
 				<!-- Sidebar user panel (optional) -->
 				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 					<div class="image">
-						<a href="#" class="d-block" data-toggle="modal" data-target="#exampleModal2"><img src="~/dist/img/@Html.DisplayFor(Model => Model.Hinhanh)" class="img-circle elevation-2"></a>
+						<a href="#" class="d-block" data-toggle="modal" data-target="#exampleModal2"><img src="~/dist/img/hinhanh" class="img-circle elevation-2"></a>
 
 					</div>
 					<div class="info">
 						<a href="#" class="d-block" data-toggle="modal" data-target="#exampleModal">
 
-							@Html.DisplayFor(Model => Model.Hoten)
+
+							@{
+								/* @Html.DisplayFor(Model => Model.Hoten) */
+							}
+
+							Ho Ten
 						</a>
 					</div>
 				</div>
 
 				<!-- SidebarSearch Form -->
 				<!-- Sidebar Menu -->
-				@RenderSection("Nav")
-				<!-- /.sidebar-menu -->
+				<nav class="mt-2">
+					<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+						<!-- Add icons to the links using the .nav-icon class
+							 with font-awesome or any other icon font library -->
+
+
+						<div style="background-color:lightslategrey">
+						<li class="nav-header" style="font-size:20px">Employee</li>
 			</div>
-			<!-- /.sidebar -->
-		</aside>
+			<li class="nav-item">
+				<a href="#" class="nav-link">
+					<i class="fas fa-circle nav-icon"></i>
+					<p>View Employee</p>
+				</a>
+			</li>
+			<div style="background-color:lightslategrey">
+				<li class="nav-header" style="font-size:20px">Request</li>
+			</div>
+			<li class="nav-item">
+				<a href="#" class="nav-link">
+					<i class="fas fa-circle nav-icon"></i>
+					<p>View Request</p>
+				</a>
+			</li>
 
-		<!-- Content Wrapper. Contains page content -->
-		@RenderBody()
-
-		<!-- /.content-wrapper -->
-		<!-- Control Sidebar -->
-		<aside class="control-sidebar control-sidebar-dark">
-			<!-- Control sidebar content goes here -->
+			</ul>
+			</nav>
 		</aside>
-		<!-- /.control-sidebar -->
+		<!-- /.sidebar-menu -->
+	</div>
+	<!-- /.sidebar -->
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h3 class="m-0">Dashboard</h3>
+					</div><!-- /.col -->
+
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="card card-primary">
+							<div class="card-header">
+								<h3 class="card-title">Create Request</h3>
+							</div>
+							<!-- /.card-header -->
+							<!-- form start -->
+							<form method="post" asp-controller="Request" asp-action="addRequest">
+								<div class="card-body">
+									<div class="form-group">
+										<label for="exampleInputEmail1">Title</label>
+										<input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Enter title">
+									</div>
+									<div class="form-group">
+										<label for="exampleInputContent1">Content</label>
+										<textarea class="form-control" rows="3" name="content"></textarea>
+									</div>
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Select Priority</label>
+										<select class="form-control" name="priority" id="exampleFormControlSelect1">
+										</select>
+									</div>
+
+
+								</div>
+								<!-- /.card-body -->
+
+								<div class="card-footer">
+									<button type="submit" class="btn btn-primary">Send Request</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div><!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+
+	<!-- /.content-wrapper -->
+	<!-- Control Sidebar -->
+	<aside class="control-sidebar control-sidebar-dark">
+		<!-- Control sidebar content goes here -->
+	</aside>
+	<!-- /.control-sidebar -->
 	</div>
 	<!-- ./wrapper -->
 	<!-- jQuery -->
@@ -282,7 +252,7 @@
 
 								<div class="form-group">
 									<label for="exampleInputEmail1">Name</label>
-									<input type="text" class="form-control" asp-for="Hoten" placeholder="Enter Name">
+									<input type="text" class="form-control"  placeholder="Enter Name">
 								</div>
 								<div class="form-group">
 									<label for="newpassword">New Password</label>
@@ -297,7 +267,7 @@
 
 								<div class="form-group">
 									<label for="datepicker">Birthday</label>
-									<input type="text" id="datepicker" asp-for="Ngaysinh" asp-format="{0:yyyy/MM/dd}" class="form-control" placeholder="Your Birthday">
+									<input type="text" id="datepicker"  asp-format="{0:yyyy/MM/dd}" class="form-control" placeholder="Your Birthday">
 								</div>
 
 

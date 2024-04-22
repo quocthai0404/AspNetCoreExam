@@ -106,5 +106,31 @@ public class AccountController : Controller
 		
 		
 	}
-
+	[HttpPost]
+	[Route("createAccount")]
+	public IActionResult createAccount(string username, string fullname, string password, string repassword, DateTime birthday, int role) {
+		if (birthday == null) {
+			TempData["Msg"] = "Invalid date";
+			return RedirectToAction("index", "dashboard", new { Area = "Admin" }) ;
+		}
+		if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(fullname) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(repassword)) {
+			TempData["Msg"] = "Invalid data";
+			return RedirectToAction("index", "dashboard", new { Area = "Admin" });
+		}
+		if (role != 1 && role != 2) {
+			TempData["Msg"] = "Invalid data";
+			return RedirectToAction("index", "dashboard", new { Area = "Admin" });
+		}
+		NhanVien nv = new NhanVien { Username = username, Password = BCrypt.Net.BCrypt.HashPassword(password), Hoten = fullname, Ngaysinh = birthday, Kichhoat = true, Hinhanh = "noimage.png", Quyen = role };
+		if (accountService.Add(nv))
+		{
+			TempData["Msg"] = "Add employee account success";
+			return RedirectToAction("index", "dashboard", new { Area = "Admin" });
+		}
+		else {
+			TempData["Msg"] = "Add employee account failed";
+			return RedirectToAction("index", "dashboard", new { Area = "Admin" });
+		}
+		
+	}
 }

@@ -10,6 +10,20 @@ public class AccountServiceImpl : AccountService
 	{
 		db = _db;
 	}
+
+	public bool Add(NhanVien nv)
+	{
+		try
+		{
+			db.NhanViens.Add(nv);
+			return db.SaveChanges() > 0;
+		}
+		catch
+		{
+			return false;
+		}
+	}
+
 	//public bool Exist(string username)
 	//{
 	//    throw new NotImplementedException();

@@ -11,9 +11,9 @@ public partial class YeuCau
 
     public string? Noidung { get; set; }
 
-    public DateTime? Ngaygui { get; set; }
+    public DateTime Ngaygui { get; set; }
 
-    public int? Madouutien { get; set; }
+    public int Madouutien { get; set; }
 
     public string? ManvGui { get; set; }
 

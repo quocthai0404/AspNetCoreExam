@@ -11,9 +11,11 @@ namespace AspdotNetCoreMVCExam.Areas.Support.Controllers;
 public class DashboardSupportController : Controller
 {
 	private AccountService accountService;
-	public DashboardSupportController(AccountService _accountService)
+	private RequestService requestService;
+	public DashboardSupportController(AccountService _accountService, RequestService _requestService)
 	{
 		accountService = _accountService;
+		requestService = _requestService;
 	}
 	[Route("")]
     [Route("index")]
@@ -21,6 +23,7 @@ public class DashboardSupportController : Controller
     {
 		var username = User.FindFirst(ClaimTypes.Name).Value;
 		NhanVien nv = accountService.FindByUsername(username);
+		ViewBag.requests = requestService.findAllBySupport(username);
 		return View("Index", nv);
 	}
 

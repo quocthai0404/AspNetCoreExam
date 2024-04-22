@@ -17,7 +17,7 @@ public class LoginController : Controller
         accountService = _accountService;
     }
 
-    [Route("~/")]
+    //[Route("~/")]
     [Route("Index")]
     [Route("")]
     public IActionResult Index()
@@ -81,6 +81,5 @@ public class LoginController : Controller
         await HttpContext.SignOutAsync();
         TempData["Msg"] = "Log out success";
         return RedirectToAction("Index");
-
     }
 }

@@ -17,10 +17,14 @@ builder.Services.AddDbContext<DatabaseContext>(option => {
 
 //service
 builder.Services.AddScoped<AccountService, AccountServiceImpl>();
+builder.Services.AddScoped<EmployeeService, EmployeeServiceImpl>();
+builder.Services.AddScoped<PriorityService, PriorityServiceImpl>();
+builder.Services.AddScoped<RequestService, RequestServiceImpl>();
 //
 /*cau hinh security*/
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option => {
     option.LoginPath = "/Login/index";
+    option.AccessDeniedPath = "/Denied/Index";
     
 });
 var app = builder.Build();
@@ -38,5 +42,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action}"
 );
+
 
 app.Run();

@@ -8,4 +8,5 @@ public interface AccountService
     //public bool Exist(string username);
     public NhanVien FindByUsername(string username);
 	public bool Update(NhanVien nv);
+	public bool Add(NhanVien nv);
 }

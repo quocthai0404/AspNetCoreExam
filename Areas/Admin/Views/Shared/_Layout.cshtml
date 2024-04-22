@@ -45,23 +45,23 @@
 		$(function () {
 			// $("#datepicker").datepicker();
 			$("#datepicker").datepicker({ dateFormat: 'yy/mm/dd' });
+			$("#datepicker2").datepicker({ dateFormat: 'yy/mm/dd' });
 			$("#from").datepicker({ dateFormat: 'yy/mm/dd' });
 			$("#to").datepicker({ dateFormat: 'yy/mm/dd' });
+
+			
 			$("#from").on("change", () => {
 
 				var dateFrom = $("#from").val();
 				$("#to").datepicker("option", "minDate", new Date(dateFrom));
 			});
+			$("#from1").datepicker({ dateFormat: 'yy/mm/dd' });
+			$("#to1").datepicker({ dateFormat: 'yy/mm/dd' });
+			$("#from1").on("change", () => {
 
-			$("#from3").datepicker({ dateFormat: 'yy/mm/dd' });
-			$("#to3").datepicker({ dateFormat: 'yy/mm/dd' });
-			$("#from3").on("change", () => {
-
-				var dateFrom = $("#from3").val();
-				$("#to3").datepicker("option", "minDate", new Date(dateFrom));
+				var dateFrom = $("#from1").val();
+				$("#to1").datepicker("option", "minDate", new Date(dateFrom));
 			});
-
-
 		});
 	</script>
 	<script>
@@ -79,24 +79,37 @@
 				}
 			});
 
+			$("#repassword1").keyup(function () {
+				var newPassword = $("#password").val();
+				var retypedPassword = $(this).val();
+				
+				if (newPassword !== retypedPassword) {
+					$("#exampleInputPassword1CreateAcc-error").show();
+					$("#exampleInputPassword1CreateAcc-success").hide();
+				} else {
+					$("#exampleInputPassword1CreateAcc-error").hide();
+					$("#exampleInputPassword1CreateAcc-success").show();
+				}
+			});
+
 			function createHTMLTable(result) {
-			  
-			  let s = "";
-			  for (let i = 0; i < result.length; i++) {
-				let manv = result[i].manvXuly==null?" ":result[i].manvXuly;
-				console.log(manv);
-				s += "<tr>";
-				s += `
-				  <td>${result[i].mayeucau}</td>
-				  <td>${result[i].tieude}</td>
-				  <td>${result[i].ngaygui}</td>
-				  <td>${result[i].madouutien}</td>
-				  <td>${result[i].noidung}</td>
-				  <td>${manv}</td>
-				`;
-				s += "</tr>";
-			  }
-			  return s;
+
+				let s = "";
+				for (let i = 0; i < result.length; i++) {
+					let manv = result[i].manvXuly == null ? " " : result[i].manvXuly;
+					console.log(manv);
+					s += "<tr>";
+					s += `
+						  <td>${result[i].mayeucau}</td>
+						  <td>${result[i].tieude}</td>
+						  <td>${result[i].ngaygui}</td>
+						  <td>${result[i].madouutien}</td>
+						  <td>${result[i].noidung}</td>
+						  <td>${manv}</td>
+						`;
+					s += "</tr>";
+				}
+				return s;
 			}
 
 			$("#buttonSearch").on("click", function () {
@@ -113,15 +126,95 @@
 						priority: priority
 					},
 					success: (result) => {
-						
+
 						if (result == 400) {
-						  
+
 							alert("Invalid Date");
 						}
-						 else {
+						else {
 							console.log(result);
 							$("#RequestTable tbody").html(createHTMLTable(result));
 						}
+					}
+				});
+			});
+
+			$(".btn-view").on("click", function () {
+
+				var username = $(this).data("value");
+				console.log(username);
+				$.ajax({
+					type: 'GET',
+					url: '/ajax/ajax2',
+					data: {
+						username: username
+					},
+					success: (result) => {
+						console.log(result);
+						$("#RequestTable2 tbody").html(createHTMLTable(result));
+
+					}
+				});
+			});
+
+			$('#supportmodal').on('click', 'a', function () {
+				let requestId = $(this).attr('data-requestId');
+				let username = $(this).attr('data-username');
+				
+				$.ajax({
+					type: 'GET',
+					url: '/Admin/Request/AddSupportToRequest',
+					data: {
+						requestId: requestId, 
+						username: username
+					},
+					success: function (response) {
+						if (response.success) {
+							window.location.href = response.redirectTo;
+							alert("Add Support To Request Success");
+						} else {
+							alert("Add Support To Request Failed");
+							window.location.href = response.redirectTo;
+						}
+					}
+				});
+
+			});
+
+			function fillToSupportTable(list, requestId) {
+				let html = '';
+
+				for (let i of list) {
+					html += `<tr>
+						<td><img src="/dist/img/${i.hinhanh}"  width="50" height="50"></td>
+						<td>${i.username}</td>
+						<td>${i.hoten}</td>
+						<td>${i.ngaysinh}</td>
+						<td><a class="btn btn-success btn-choose" data-requestId="${requestId}" data-username="${i.username}">Choose</a></td>
+					</tr>`;
+				}
+
+				return html;
+			}
+			
+
+			$(".btn-addSupport").on("click", function () {
+
+				var requestID = $(this).data("idrequest");
+				
+				$.ajax({
+					type: 'GET',
+					url: '/ajax/ajax3',
+					data: {
+						requestID: requestID
+					},
+					success: (result) => {
+						
+						let requestId = result.requestID;
+						let list = result.listsupport;
+						console.log(list);
+						$('#supportmodal tbody').html(fillToSupportTable(list, requestId));
+
 					}
 				});
 			});
@@ -129,32 +222,40 @@
 
 				let s = "";
 				for (let i = 0; i < result.length; i++) {
-					
+					let manv = result[i].manvXuly == null ? " " : result[i].manvXuly;
+					console.log(manv);
+					let td = '';
+					if (result[i].manvXuly == null) {
+						td = `<a class="btn btn-success btn-addSupport" data-idrequest="${result[i].mayeucau}" data-toggle="modal" data-target="#supportmodal">Choose Support</a>`;
+					}else{
+						td=manv
+					}
 					s += "<tr>";
 					s += `
 						  <td>${result[i].mayeucau}</td>
+							<td>${result[i].manvGui}</td>
 						  <td>${result[i].tieude}</td>
 						  <td>${result[i].ngaygui}</td>
 						  <td>${result[i].madouutien}</td>
 						  <td>${result[i].noidung}</td>
-						  
+						  <td>${td}</td>
 						`;
 					s += "</tr>";
 				}
 				return s;
 			}
+			
+			$("#buttonSearchAdmin").on("click", function () {
 
-			$("#buttonSearch3").on("click", function () {
-
-				var from = $('#from3').val();
-				var to = $('#to3').val();
-				var priority = $('#priority3').val();
-				console.log(from);
-				console.log(to);
-				console.log(priority);
+				var from = $('#from1').val();
+				var to = $('#to1').val();
+				var priority = $('#priority1').val();
+				console.log("from: "+from);
+				console.log("from: "+to);
+				console.log("from: "+priority);
 				$.ajax({
 					type: 'GET',
-					url: '/ajax/ajax5',
+					url: '/ajax/ajax4',
 					data: {
 						from: from,
 						to: to,
@@ -167,15 +268,33 @@
 							alert("Invalid Date");
 						}
 						else {
-							
-							$("#RequestTable3 tbody").html(createHTMLTable2(result));
+							console.log(result);
+							$("#RequestTable tbody").html(createHTMLTable2(result));
 						}
 					}
 				});
 			});
-		});
-		
+			$('#RequestTable').on('click', 'a', function () {
+				var requestID = $(this).data("idrequest");
 
+				$.ajax({
+					type: 'GET',
+					url: '/ajax/ajax3',
+					data: {
+						requestID: requestID
+					},
+					success: (result) => {
+
+						let requestId = result.requestID;
+						let list = result.listsupport;
+						console.log(list);
+						$('#supportmodal tbody').html(fillToSupportTable(list, requestId));
+
+					}
+				});
+
+			});
+		});
 	</script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -265,7 +384,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" asp-controller="account" asp-action="changeInfo">
+				<form method="post" asp-area="admin" asp-controller="account" asp-action="changeInfoAdmin">
 					<div class="modal-body">
 						<div class="card card-primary">
 							<!--
@@ -312,7 +431,7 @@
 					</div>
 
 					<div class="modal-footer">
-						<a class="btn btn-danger" asp-action="logout" asp-controller="Login">Log Out</a>
+						<a class="btn btn-danger" asp-area="admin" asp-action="logout" asp-controller="Login">Log Out</a>
 						<button type="submit" class="btn btn-primary">Save changes</button>
 					</div>
 				</form>
@@ -332,7 +451,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form method="post" asp-controller="account" asp-action="changePhoto" enctype="multipart/form-data">
+				<form method="post" asp-area="admin" asp-controller="account" asp-action="changePhotoAdmin" enctype="multipart/form-data">
 					<div class="modal-body">
 						<div class="card card-primary">
 							<input type="file" name="file">
@@ -348,7 +467,169 @@
 			</div>
 		</div>
 	</div>
+	<!--modal request-->
+	<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		  
+				
+			<div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-12">
+					<div class="card ">
+						<div class="card-header bg-info">
+							<h3 class="card-title" style="margin-top: 11px;">All Request</h3>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body table-responsive p-0">
+							<table class="table table-hover text-nowrap" id="RequestTable2">
+								<thead>
+									<tr>
+										<th>ID Request</th>
+										<th>Title</th>
+										<th>Date</th>
+										<th>Priority</th>
+										<th width="150px">Content</th>
+										<th>Support ID</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      
+      </div>
+		</div>
+	  </div>
+	</div>
+	<!-- Modal create account -->
+	<div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!--Modal Header-->
+				<div class="modal-header card-header">
+					<h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form method="post" asp-controller="account" asp-action="createAccount">
+					<div class="modal-body">
+						<div class="card card-primary">
+
+							<div class="card-body">
+
+								<div class="form-group">
+									<label>Username</label>
+									<input type="text" class="form-control" name="username" placeholder="Enter username">
+								</div>
+								<div class="form-group">
+									<label>Fullname</label>
+									<input type="text" class="form-control" name="fullname" placeholder="Enter Fullname">
+								</div>
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input name="password" type="password" class="form-control" id="password" placeholder="Enter Password">
+								</div>
+								<div class="form-group">
+									<label for="repassword1">Retype Password</label>
+									<input name="repassword" type="password" class="form-control" id="repassword1" placeholder="Retype Password">
+									<span id="exampleInputPassword1CreateAcc-error" class="error invalid-feedback">Repassword not match new password</span>
+									<span id="exampleInputPassword1CreateAcc-success" class="error invalid-feedback" style="color:limegreen">Repassword match new password</span>
+								</div>
+
+								<div class="form-group">
+									<label for="datepicker">Birthday</label>
+									<input type="text" name="birthday" id="datepicker2" class="form-control" placeholder="Enter Birthday">
+								</div>
+								<div class="form-group">
+									<label for="datepicker">Role</label>
+									<br>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="role" id="inlineRadio1" value="1">
+										<label class="form-check-label" for="inlineRadio1">Employee &nbsp &nbsp</label>
+										<input class="form-check-input" type="radio" name="role" id="inlineRadio2" value="2">
+										<label class="form-check-label" for="inlineRadio2">Support</label>
+									</div>
+									
+								</div>
 
 
+
+							</div>
+							<!-- /.card-body -->
+
+							<div class="modal-footer">
+								<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Create</button>
+							</div>
+
+						</div>
+					</div>
+
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!--modal support-->
+	<div class="modal fade" id="supportmodal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+
+
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">List Support</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="col-12">
+						<div class="card ">
+							
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0">
+								<table class="table table-hover text-nowrap" id="SupportTable">
+									<thead>
+										<tr>
+											<th>Avatar</th>
+											<th>Username</th>
+											<th>FullName</th>
+											<th>Birthday</th>
+											<th>Action</th>
+										
+										</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
+								</table>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
