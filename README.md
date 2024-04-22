@@ -28,7 +28,8 @@ The database for the system is shown in the following diagram:
 **Support request management:**  Employees can submit support requests, and support staff can view and assign requests.  
 **Search:**  Users can search for requests by time range and priority.  
 **Account management:**  Users can update their account information.  
-**#Technologies**  The system is built using the following technologies:
+## Technologies 
+The system is built using the following technologies:
 
 **ASP.NET Core MVC:**  A web application framework for building ASP.NET Core web applications.  
 **Entity Framework Core:**  An object-relational mapper (ORM) for .NET.  
