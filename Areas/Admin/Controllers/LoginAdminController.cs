@@ -15,7 +15,7 @@ public class LoginAdminController : Controller
 	{
 		accountService = _accountService;
 	}
-	[Route("~/")]
+	//[Route("~/")]
 	[Route("")]
 	[Route("Index")]
 	public IActionResult Index()

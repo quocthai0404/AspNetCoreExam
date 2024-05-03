@@ -1,5 +1,8 @@
 ﻿using AspdotNetCoreMVCExam.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Security.Claims;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace AspdotNetCoreMVCExam.Services;
@@ -22,6 +25,54 @@ public class RequestServiceImpl : RequestService
 		catch
 		{
 			return false;
+		}
+	}
+
+	public dynamic find(string sFrom, string sTo, int PriorityId, string username)
+	{
+		var list = findAllBySender(username);
+		DateTime From, To;
+		if (PriorityId == -1)
+		{
+			
+			if (string.IsNullOrEmpty(sFrom) && string.IsNullOrEmpty(sTo))
+			{
+				//return new JsonResult("find all");
+				return findAllBySenderDynamic(username);
+			}
+			else if (!(string.IsNullOrEmpty(sFrom) || string.IsNullOrEmpty(sTo)))
+			{
+				//return new JsonResult("tim theo from to");
+				From = DateTime.ParseExact(sFrom, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				To = DateTime.ParseExact(sTo, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				return findByDateDynamic(From, To, username);
+			}
+			else
+			{
+				//return new JsonResult("error");
+				return "400";
+			}
+		}
+		else
+		{
+			
+			if (string.IsNullOrEmpty(sFrom) && string.IsNullOrEmpty(sTo))
+			{
+				//return new JsonResult("tim theo pri");
+				return findByPriorityDynamic(PriorityId, username);
+			}
+			else if (string.IsNullOrEmpty(sFrom) || string.IsNullOrEmpty(sTo))
+			{
+				//return new JsonResult("error");
+				return "400";
+			}
+			else
+			{
+				From = DateTime.ParseExact(sFrom, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				To = DateTime.ParseExact(sTo, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				//return new JsonResult("tim theo ca 3");
+				return findByDateAndPriorityDynamic(From, To, PriorityId, username);
+			}
 		}
 	}
 
@@ -81,6 +132,52 @@ public class RequestServiceImpl : RequestService
 			ManvGui = r.ManvGui,
 			ManvXuly = r.ManvXuly
 		}).ToList();
+	}
+
+	public dynamic findByAdmin(string From,	string To, int PriorityId)
+	{
+		var list = findAllByAdmin();
+		DateTime dFrom, dTo;
+		if (PriorityId == -1)
+		{
+			if (string.IsNullOrEmpty(From) && string.IsNullOrEmpty(To))
+			{
+				//return new JsonResult("find all");
+				return findAllDynamicByAdmin();
+			}
+			else if (!(string.IsNullOrEmpty(From) || string.IsNullOrEmpty(To)))
+			{
+				dFrom = DateTime.ParseExact(From, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				dTo = DateTime.ParseExact(To, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				//return new JsonResult("tim theo from to");
+				return findByDateDynamicByAdmin(dFrom, dTo);
+			}
+			else
+			{
+				//return new JsonResult("error");
+				return "400";
+			}
+		}
+		else
+		{
+			if (string.IsNullOrEmpty(From) && string.IsNullOrEmpty(To))
+			{
+				//return new JsonResult("tim theo pri");
+				return findByPriorityDynamicByAdmin(PriorityId);
+			}
+			else if (string.IsNullOrEmpty(From) || string.IsNullOrEmpty(To))
+			{
+				//return new JsonResult("error");
+				return "400";
+			}
+			else
+			{
+				dFrom = DateTime.ParseExact(From, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				dTo = DateTime.ParseExact(To, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				//return new JsonResult("tim theo ca 3");
+				return findByDateAndPriorityDynamicByAdmin(dFrom, dTo, PriorityId);
+			}
+		}
 	}
 
 	public List<YeuCau> findByDate(DateTime From, DateTime To, string username)
@@ -239,6 +336,53 @@ public class RequestServiceImpl : RequestService
 			ManvGui = r.ManvGui,
 			ManvXuly = r.ManvXuly
 		}).ToList();
+	}
+
+	public dynamic findBySupport(string sFrom, string sTo, int PriorityId, string username)
+	{
+		DateTime From, To;
+		if (PriorityId == -1)
+		{
+
+			if (string.IsNullOrEmpty(sFrom) && string.IsNullOrEmpty(sTo))
+			{
+				//return new JsonResult("find all");
+				return findAllDynamicBySupport(username);
+			}
+			else if (!(string.IsNullOrEmpty(sFrom) || string.IsNullOrEmpty(sTo)))
+			{
+				//return new JsonResult("tim theo from to");
+				From = DateTime.ParseExact(sFrom, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				To = DateTime.ParseExact(sTo, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				return findByDateDynamicBySupport(From, To, username);
+			}
+			else
+			{
+				//return new JsonResult("error");
+				return "400";
+			}
+		}
+		else
+		{
+
+			if (string.IsNullOrEmpty(sFrom) && string.IsNullOrEmpty(sTo))
+			{
+				//return new JsonResult("tim theo pri");
+				return findByPriorityDynamicBySupport(PriorityId, username);
+			}
+			else if (string.IsNullOrEmpty(sFrom) || string.IsNullOrEmpty(sTo))
+			{
+				//return new JsonResult("error");
+				return "400";
+			}
+			else
+			{
+				From = DateTime.ParseExact(sFrom, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				To = DateTime.ParseExact(sTo, "yyyy/MM/dd", CultureInfo.InvariantCulture);
+				//return new JsonResult("tim theo ca 3");
+				return findByDateAndPriorityDynamicBySupport(From, To, PriorityId, username);
+			}
+		}
 	}
 
 	public bool update(YeuCau yeucau)
